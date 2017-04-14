@@ -25,23 +25,32 @@ End Code
     function LoadSubjectsForCourse() {
         var serviceURL = '/Teachers/LoadSubjectsForCourse'; //This should not be inside AJAX call itself
         var iSel = $('#SelectedCourse').val(); //mere $(this).val() does not seem to work
-        $.ajax({
-            //type: "POST",
-            url: serviceURL,
-            //data: param = "",
-            data: { iCourseID: iSel }, /*The parameter name in the FirstAJAX Action should be "param" only*/
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: successFunc,
-            error: errorFunc
-        });
+        if(iSel>0)
+        {
+            $.ajax({
+                //type: "POST",
+                url: serviceURL,
+                //data: param = "",
+                data: { iCourseID: iSel }, /*The parameter name in the FirstAJAX Action should be "param" only*/
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc
+            });
+        }
+        else
+        {
+            //No course loaded so subjects also cannot be loaded
+            $(".divsubjects").hide();
+        }
+        
     }
 
     function successFunc(data, status) {
 
         //JSON members should be same case as how it is sent.  Otherwise, it will not show up
         if (data.length > 0) {
-
+            $(".divsubjects").show();
             $('#SelectedSubject').empty();
             $.each(data, function (i, item) {
                 $('#SelectedSubject').append($('<option>', {
@@ -51,11 +60,14 @@ End Code
             });
         }
         else
-            alert("The students list is empty");
+        {            
+            alert("The subjects list is empty");
+            $(".divsubjects").hide();
+        }
     }
 
     function errorFunc() {
-        alert('A problem occured while fetching list of students taking course');
+        alert('A problem occured while fetching list of subjects for course');
     }
 </script>
 <div class="row" style="padding-top:100px;">
@@ -122,11 +134,16 @@ End Code
                     End If
                     @<tr>
                         <td>
-                            @Html.Label("Your CURRENT Subject:", htmlAttributes:=New With {.class = "control-label col-md-2", .style = "width:100%;"})
+                            <div class="divsubjects">
+                                 @Html.Label("Your CURRENT Subject:", htmlAttributes:=New With {.class = "control-label col-md-2", .style = "width:100%;"})
+                            </div>
+                           
                         </td>
                         <td>
-                            @Html.DropDownListFor(Function(model) model.SelectedSubject, Model.TeachingSubjectsList1)
-                            @Html.ValidationMessageFor(Function(model) model.SelectedSubject, "", New With {.class = "text-danger"})
+                            <div class="divsubjects">
+                                 @Html.DropDownListFor(Function(model) model.SelectedSubject, Model.TeachingSubjectsList1)
+                                 @Html.ValidationMessageFor(Function(model) model.SelectedSubject, "", New With {.class = "text-danger"})
+                            </div>
                         </td>
                     </tr>
 

@@ -36,10 +36,13 @@ End Code
                 <td>FIRSTNAME:</td>
                 <td>@Model.Firstname</td>
             </tr>
-            <tr>
-                <td>FIRSTNAME:</td>
+            @If Model.Status = "TEACHER" Then
+                 @<tr>
+                <td>MIDDLENAME :         </td>
                 <td>@Model.Middlename</td>
             </tr>
+            End If
+           
             <tr>
                 <td>LASTNAME :  </td>
                 <td>@Model.Lastname</td>

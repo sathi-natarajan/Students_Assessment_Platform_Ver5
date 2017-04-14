@@ -28,6 +28,147 @@ End Code
     });
 </script>
 
+<script>
+    $(document).ready(function () {
+        LoadCities();
+    });
+
+    function LoadCities() {
+        var serviceURL = '/Home/GetCitiesForState'; //This should not be inside AJAX call itself
+        var iSel = $('#SelectedState').val(); //mere $(this).val() does not seem to work;
+        if (iSel > 0)
+        {
+            $.ajax({
+                //type: "POST",
+                url: serviceURL,
+                //data: param = "",
+                data: { iStateID: iSel }, /*The parameter name in the FirstAJAX Action should be "param" only*/
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc
+            });
+        }
+        else
+            alert("No states are available to load");
+    }
+
+    function LoadSchoolDistricts() {
+        var serviceURL = '/Home/GetSchoolDistrictsForCityState'; //This should not be inside AJAX call itself
+        var iSel1 = $('#SelectedState').val(); //mere $(this).val() does not seem to work;
+        var iSel2 = $('#SelectedCity').val(); //mere $(this).val() does not seem to work;
+        if (iSel1 > 0 && iSel2 > 0) {
+            $.ajax({
+                //type: "POST",
+                url: serviceURL,
+                //data: param = "",
+                data: {iStateID: iSel1, iCityID: iSel2}, /*The parameter name in the FirstAJAX Action should be "param" only*/
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: successFunc1,
+                error: errorFunc1
+            });
+        }
+        else
+            alert("No cities are available to load");
+    }
+
+    function LoadSchools() {
+        var serviceURL = '/Home/GetSchoolsForDistrictCityState'; //This should not be inside AJAX call itself
+        var iSel1 = $('#SelectedState').val(); //mere $(this).val() does not seem to work;
+        var iSel2 = $('#SelectedCity').val(); //mere $(this).val() does not seem to work;
+        var iSel3 = $('#SelectedSchoolDist').val(); //mere $(this).val() does not seem to work;
+        if (iSel1 > 0 && iSel2 > 0 && iSel3>0) {
+            $.ajax({
+                //type: "POST",
+                url: serviceURL,
+                //data: param = "",
+                data: { iStateID: iSel1, iCityID: iSel2, iDistrictID: iSel3 }, /*The parameter name in the FirstAJAX Action should be "param" only*/
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: successFunc2,
+                error: errorFunc2
+            });
+        }
+        else
+            alert("No schools are available to load");
+    }
+
+    function successFunc(data, status) {
+        //JSON members should be same case as how it is sent.  Otherwise, it will not show up
+      
+        if (data.length > 0) {
+            $('#SelectedCity').empty();
+            $.each(data, function (i, item) {
+                $('#SelectedCity').append($('<option>', {
+                    value: item.CityID,
+                    text: item.Cityname
+                }));
+            });
+            LoadSchoolDistricts()
+        }
+    }
+
+    function successFunc1(data, status) {
+        //JSON members should be same case as how it is sent.  Otherwise, it will not show up
+
+        if (data.length > 0) {
+            $('#SelectedSchoolDist').empty();
+            $.each(data, function (i, item) {
+                $('#SelectedSchoolDist').append($('<option>', {
+                    value: item.SchoolDistrictID,
+                    text: item.SchoolDistrictname
+                }));
+            });
+            LoadSchools();
+        }
+    }
+
+    function successFunc2(data, status) {
+        //JSON members should be same case as how it is sent.  Otherwise, it will not show up
+
+        if (data.length > 0) {
+            $('#SelectedSchool1').empty();
+            $.each(data, function (i, item) {
+                $('#SelectedSchool1').append($('<option>', {
+                    value: item.SchoolID,
+                    text: item.Schoolname
+                }));
+            });
+        }
+    }
+        ////alert(strQuestionInfo);
+        //$("#dlgQuestionInfo").html("<p>" + strQuestionInfo + "</p>")
+        //$("#dlgQuestionInfo").dialog({
+        //    resizable: false,
+        //    title: "Info. on selected course",
+        //    height: "auto",
+        //    width: 500,
+        //    height: 300,
+        //    modal: true,
+        //    buttons: {
+        //        "OK": function () {
+        //            // alert("You clicked OK");
+        //            $(this).dialog("close");
+        //        },
+        //        //Cancel: function () {
+        //        //    //alert("You clicked Cancel");
+        //        //    $(this).dialog("close");
+        //        //}
+        //    }
+        //});
+
+    function errorFunc() {
+        alert('An error occured when trying to fetch cities for the selected state');
+    }
+    function errorFunc1() {
+        alert('An error occured when trying to fetch school districts for the selected city/state');
+    }
+    function errorFunc2() {
+        alert('An error occured when trying to fetch schools for the selected city/state/school district');
+    }
+</script>
+
 <div class="row" style="padding:100px;">
     <div class="col-sm-9" style="width:700px;">
         @Using (Html.BeginForm())
@@ -114,9 +255,7 @@ End Code
                     </td>
                 </tr>
               </table>
-              @<fieldset>
-                <legend>SCHOOL INFORMATION:</legend>
-                    <table border="1" cellpadding="7" cellspacing="7">
+                    @<table border="0" cellpadding="7" cellspacing="7">
                 <colgroup>
                     <col width="400" />
                     <col width="400" />
@@ -128,109 +267,65 @@ End Code
                             @Html.Label("SELECT SCHOOL'S STATE:")
                         </td>
                         <td>
-                            @Html.DropDownListFor(Function(model) model.SelectedState, Model.StatesListDDL)
+                            @Html.DropDownListFor(Function(model) model.SelectedState, Model.StatesListDDL, New With {.onchange = "LoadCities();"})
                             @Html.ValidationMessageFor(Function(model) model.SelectedState, "", New With {.class = "text-danger"})
                         </td>
                     </tr>
-                    @If Model.CitiesListDDL.Count > 0 Then
-                        @<tr>
-                            <td colspan="2">
-                                @Html.Label("SELECT SCHOOL'S CITY:")
-                            </td>
-                            <td>
-                                @Html.DropDownListFor(Function(model) model.SelectedCity, Model.CitiesListDDL)
-                                @Html.ValidationMessageFor(Function(model) model.SelectedCity, "", New With {.class = "text-danger"})
-                            </td>
-                        </tr>
-                        @If Model.SchoolDistrictsListDDL.Count > 0 Then
-                            @<tr>
-                                <td colspan="2">
-                                    @Html.Label("SELECT SCHOOL DISTRICT:")
-                                </td>
-                                <td>
-                                    @Html.DropDownListFor(Function(model) model.SelectedSchoolDist, Model.SchoolDistrictsListDDL)
-                                    @Html.ValidationMessageFor(Function(model) model.SelectedSchoolDist, "", New With {.class = "text-danger"})
-                                </td>
-                            </tr>
-                            @If Model.Schools1ListDDL.Count > 0 Then
-                                @<tr>
-                                    <td colspan="2">
-                                        @Html.Label("SELECT YOUR SCHOOL:")
-                                    </td>
-                                    <td>
-                                        @Html.DropDownListFor(Function(model) model.SelectedSchool1, Model.Schools1ListDDL)
-                                        @Html.ValidationMessageFor(Function(model) model.SelectedSchool1, "", New With {.class = "text-danger"})
-                                    </td>
-                                </tr>
-                            Else
-                                @<tr>
-                                    <td colspan="2">
-                                        @Html.Label("School information could not be loaded for selection")
-                                    </td>
-                                </tr>
-                                @<tr>
-                                    <td colspan="3" style="text-align:center;">
-                                        <input type="button" id="Back" name="Back" value="Back" Class="btn btn-success clsbutton-round" style="background:cadetblue;" onclick="location.href='@Url.Action("Index", "Home")'" />
-                                    </td>
-                                </tr>
-                            End If
-Else
-                            @<tr>
-                                <td colspan="2">
-                                    @Html.Label("School District information could not be loaded  for selection")
-                                </td>
-                            </tr>
-                            @<tr>
-                                <td colspan="3" style="text-align:center;">
-                                    <input type="button" id="Back" name="Back" value="Back" Class="btn btn-success clsbutton-round" style="background:cadetblue;" onclick="location.href='@Url.Action("Index", "Home")'" />
-                                </td>
-                            </tr>
-                        End If
-Else
-                        @<tr>
-                            <td colspan="2">
-                                @Html.Label("City information could not be loaded  for selection")
-                            </td>
-                        </tr>
-                        @<tr>
-                            <td colspan="3" style="text-align:center;">
-                                <input type="button" id="Back" name="Back" value="Back" Class="btn btn-success clsbutton-round" style="background:cadetblue;" onclick="location.href='@Url.Action("Index", "Home")'" />
-                            </td>
-                        </tr>
-                    End If
-Else
                     @<tr>
                         <td colspan="2">
-                            @Html.Label("State information could not be loaded  for selection")
+                            @Html.Label("SELECT SCHOOL'S CITY:")
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(Function(model) model.SelectedCity, Model.CitiesListDDL, New With {.onchange = "LoadSchoolDistricts();"})
+                            @Html.ValidationMessageFor(Function(model) model.SelectedCity, "", New With {.class = "text-danger"})
+                        </td>
+                    </tr>
+                    @<tr>
+                        <td colspan="2">
+                            @Html.Label("SELECT SCHOOL'S DISTRICT:")
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(Function(model) model.SelectedSchoolDist, Model.SchoolDistrictsListDDL, New With {.onchange = "LoadSchools();"})
+                            @Html.ValidationMessageFor(Function(model) model.SelectedSchoolDist, "", New With {.class = "text-danger"})
+                        </td>
+                    </tr>
+                    @<tr>
+                        <td colspan="2">
+                            @Html.Label("SELECT YOUR SCHOOL:")
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(Function(model) model.SelectedSchool1, Model.Schools1ListDDL)
+                            @Html.ValidationMessageFor(Function(model) model.SelectedSchool1, "", New With {.class = "text-danger"})
                         </td>
                     </tr>
                     @<tr>
                 <td colspan = "3" style="text-align:center;">
+                    <input type = "submit" value="CREATE ACCOUNT" Class="btn btn-success clsbutton-round" style="background:cadetblue;" />
                     <input type = "button" id="Back" name="Back" value="Back" Class="btn btn-success clsbutton-round" style="background:cadetblue;" onclick="location.href='@Url.Action("Index", "Home")'" />
                 </td>
+            </tr>
+                Else
+            @<tr>
+                <td colspan="2">
+                    @Html.Label("State information could not be loaded  for selection")
+                </td>
+            </tr>
+            @<tr>
+                    <td colspan="3" style="text-align:center;">
+                        <input type="button" id="Back" name="Back" value="Back" Class="btn btn-success clsbutton-round" style="background:cadetblue;" onclick="location.href='@Url.Action("Index", "Home")'" />
+                    </td>
             </tr>
                 End If
-            <tr>
-                <td colspan = "3" style="text-align:center;">
-                    <input type = "submit" value="@Session("buttoncaption").ToString" Class="btn btn-success clsbutton-round" style="background:cadetblue;" />
-                    <input type = "button" id="Back" name="Back" value="Back" Class="btn btn-success clsbutton-round" style="background:cadetblue;" onclick="location.href='@Url.Action("Index", "Home")'" />
-                </td>
-            </tr>
-            <tr>
-                    <td colspan = "3" >
-                        @If String.IsNullOrEmpty(Model.Errormessage) = False Then
-                            @<div class="field-validation-error">
-                                @Model.Errormessage
-                            </div>
-                        Else
-                            @<div class="field-validation-error">
-                                @Html.Raw(Model.Successmessage)
-                            </div>
-                        End If
-                    </td>
-                </tr>
             </table>
-</fieldset>
-        End Using
+            @If String.IsNullOrEmpty(Model.Errormessage) = False Then
+                @<div class="field-validation-error">
+                    @Model.Errormessage
+                </div>
+            Else
+                @<div class="field-validation-error">
+                    @Html.Raw(Model.Successmessage)
+                </div>
+            End If
+End Using
     </div>
 </div>

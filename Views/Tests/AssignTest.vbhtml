@@ -68,7 +68,7 @@ End Code
                         </tr>
                         @<tr>
                             <td colspan="2" style="text-align:center;">
-                                <input type="button" id="Back" name="Back" value="Back" Class="btn btn-success clsbutton" style="background:cadetblue;" onclick="location.href='@Url.Action("Index", "Home")'" />
+                                <input type="button" id="Back" name="Back" value="Back" Class="btn btn-success clsbutton-round" style="background:cadetblue;" onclick="location.href='@Url.Action("Index", "Home")'" />
                             </td>
                         </tr>
                     End If
@@ -82,7 +82,7 @@ End Code
                     </tr>
                     @<tr>
                         <td colspan="2" style="text-align:center;">
-                            <input type="button" id="Back" name="Back" value="Back" Class="btn btn-success clsbutton" style="background:cadetblue;" onclick="location.href='@Url.Action("Index", "Home")'" />
+                            <input type="button" id="Back" name="Back" value="Back" Class="btn btn-success clsbutton-round" style="background:cadetblue;" onclick="location.href='@Url.Action("Index", "Home")'" />
                         </td>
                     </tr>
                 End If

@@ -1,0 +1,51 @@
+﻿/*body
+{
+    background-color: #D2D1D0;
+     color:#383838;
+    font-size:15px;
+    font-family:Arial;
+    font-weight:normal;
+    text-decoration:none;
+    line-height:20px;
+}*/
+
+/*.Title
+{
+    color:#383838;
+    font-size:20px;
+    font-weight:bold;
+    text-decoration:underline;
+}
+
+.FormLabel
+{
+    padding: 0 20px 0 20px;
+}*/
+
+.watermark
+{
+    color: Gray;
+}
+
+.blueWatermark
+{
+    color: Blue;
+}
+
+/*.input
+{
+    width:200px;
+    border:solid 1px #383838;
+    font-size:13px;
+    padding:2px;
+}
+
+.button
+{
+    width:auto;
+}
+
+.ExamplesTable
+{
+    
+}*/

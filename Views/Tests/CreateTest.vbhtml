@@ -113,8 +113,8 @@ End Code
                 </tr>
                 <tr>
                     <td colspan="2" style="text-align:center;">
-                        <input type="submit" value="CREATE TEST" class="btn btn-success clsbutton" style="background:cadetblue;" />
-                        <input type="button" value="BACK" Class="btn btn-success clsbutton" style="background:cadetblue;" onclick="location.href='@Url.Action("Index", "Home")'" />
+                        <input type="submit" value="CREATE TEST" class="btn btn-success clsbutton-round" style="background:cadetblue;" />
+                        <input type="button" value="BACK" Class="btn btn-success clsbutton-round" style="background:cadetblue;" onclick="location.href='@Url.Action("Index", "Home")'" />
                     </td>
                 </tr>
                 @If String.IsNullOrEmpty(Model.TestNo.TestNo) = False Then
