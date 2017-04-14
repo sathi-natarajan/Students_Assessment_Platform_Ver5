@@ -1,0 +1,43 @@
+﻿
+#divHeaderJumbotron,#divFooter{
+    background:#7fc860 !important ;
+}
+
+#divError
+{
+    background-color:#7fc860 !important ;
+    color:#fff;
+} 
+
+.clsbutton{
+    background:#7fc860 !important ;
+}
+
+.clsbutton-round{
+    background:#7fc860 !important ;
+    border-radius: 24px; !important;
+}
+
+
+hr{
+background:#7fc860  !important ;
+}
+
+#divQuestionsList {
+    border: 2px solid #7fc860 !important;
+}
+
+/*This is for superfish menu coloring*/
+.clsmenu li
+{
+    background:#7fc860  !important ;
+}
+.clsmenu li a
+{
+    color:#fff !important;
+}
+
+/*Dialog boxes*/
+/*.dialog {
+    background:#b0c7a6 !important ;*/ /*LIghter version of #7fc860*/
+/*}*/

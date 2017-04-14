@@ -1,0 +1,90 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+StudentsAssessment
+</name>
+</assembly>
+<members>
+<member name="T:StudentsAssessment.AnswersData">
+ <summary>
+ for now, it is used for display purposes only in AssessmentBank Indiv student Performance
+ </summary>
+</member>
+<member name="M:StudentsAssessment.ProfileData.LoadEnrolledClassesList">
+ <summary>
+ This is for students only
+ </summary>
+</member>
+<member name="M:StudentsAssessment.QuestionData.GetAssessmentsAddedto">
+ <summary>
+ Gets a set of assessments that tthe current question has been added to
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:StudentsAssessment.general.GetConnectStringFromWebConfig">
+ <summary>
+ This returns the connection string it reads from web.config file
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:StudentsAssessment.general.GetTeacherName(System.Int32)">
+ <summary>
+ Given the teacher ID, this function returns the teacher's name.  This is the
+ combination of teacher's first and last names
+ </summary>
+ <param name="iTeacherID"></param>
+ <returns></returns>
+</member>
+<member name="M:StudentsAssessment.TeacherData.LoadCoursesTaughtByTeacher">
+ <summary>
+ Loads list of courses the teacher is teaching
+ </summary>
+</member>
+<member name="M:StudentsAssessment.TeacherData.GetTeachingClasses">
+ <summary>
+ Gets list of classes the teacher is teaching
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:StudentsAssessment.TeacherData.GetTeachingSubjects1">
+ <summary>
+ Gets list of subjects the teacher is teaching
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:StudentsAssessment.TeacherData.GetTeachingGradeLevelsList1">
+ <summary>
+ Gets list of subjects the teacher is teaching
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:StudentsAssessment.TestData.LoadIncompleteTests">
+ <summary>
+ A test is considered incomplete when ATLEAST ONE STUDENT has not yet completed it
+ </summary>
+</member>
+<member name="M:StudentsAssessment.TestData.LoadUnassignedTests">
+ <summary>
+ Loads a list of tests that have been created by the given teacher but that have not been
+ assigned to anyone yet
+ </summary>
+</member>
+<member name="T:StudentsAssessment.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:StudentsAssessment.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:StudentsAssessment.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+</members>
+</doc>

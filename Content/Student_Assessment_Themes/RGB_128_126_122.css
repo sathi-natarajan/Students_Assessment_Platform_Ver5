@@ -1,0 +1,48 @@
+﻿#divHeaderJumbotron,#divFooter{
+    background:rgb(128,126,122) !important ;
+}
+
+#divError
+{
+    background-color:rgb(128,126,122) !important ;
+    color:#fff;
+} 
+
+/*new one put there too*/
+input[type=text]{
+    border:3px solid rgb(128,126,122) !important ;
+    font-style:italic;
+    color:rgb(128,126,122) !important;
+}
+.clsbutton{
+    background:rgb(128,126,122) !important ;
+}
+
+.clsbutton-round{
+    background:rgb(128,126,122) !important ;
+    border-radius: 24px !important;
+}
+
+hr{
+background:rgb(128,126,122)  !important ;
+}
+
+#divQuestionsList {
+    border: 2px solid rgb(128,126,122) !important;
+}
+
+/*This is for superfish menu coloring*/
+.clsmenu li
+{
+    background:rgb(128,126,122)  !important ;
+}
+.clsmenu li a
+{
+    color:#fff !important;
+}
+
+/*Dialog boxes*/
+.clsDialog
+{
+    background:rgb(128,126,122)  !important ;
+}
